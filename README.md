@@ -34,53 +34,20 @@ Este repositorio contiene la implementación completa de un chatbot inteligente 
 
 ```mermaid
 graph TD
-    %% Estilos
-    classDef userStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000
-    classDef frontendStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
-    classDef backendStyle fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px,color:#000
-    classDef mcpStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
-    classDef n8nStyle fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000
-    classDef aiStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
-
-    %% Nodos principales
-    U[👤 Usuario<br/>Interfaz Web]:::userStyle
-    F[🎨 Frontend<br/>HTML + Bootstrap + JS<br/>localhost:8080]:::frontendStyle
-    B[⚡ Backend Principal<br/>FastAPI Server<br/>Puerto 8080<br/>Endpoints: /, /chatbot]:::backendStyle
-    M[🔧 API MCP<br/>FastAPI Server<br/>Puerto 8000<br/>Endpoints: /get_all_projects, /get_project_by_id]:::mcpStyle
-    N[🧠 N8N Workflow<br/>Motor de Chatbot<br/>Puerto 5678<br/>Webhook + MCP Node]:::n8nStyle
-    A[🤖 MCP Server<br/>Model Context Protocol<br/>IA Avanzada + Herramientas]:::aiStyle
-
-    %% Flujo principal
-    U -->|1. Accede a interfaz| F
-    U -->|2. Escribe pregunta| F
-    F -->|3. HTTP POST /chatbot<br/>FormData: pregunta| B
-    B -->|4. Webhook HTTP<br/>JSON: {pregunta}| N
-    N -->|5. Procesa con MCP<br/>Contexto + Herramientas| A
-    A -->|6. Respuesta IA<br/>Contextual + Métricas| N
-    N -->|7. HTTP Response<br/>JSON: {Respuesta}| B
-    B -->|8. JSON Response<br/>{status, Respuesta}| F
-    F -->|9. Renderiza respuesta<br/>en tiempo real| U
-
-    %% Conexiones adicionales MCP
-    M -.->|APIs especializadas<br/>Base de datos| A
-    A -.->|Herramientas disponibles<br/>Inspector MCP| N
-
-    %% Información adicional
-    subgraph "🔄 Flujo de Datos"
-        direction LR
-        D1[📝 Pregunta del Usuario]
-        D2[🔄 Procesamiento N8N]
-        D3[🧠 IA + MCP]
-        D4[💬 Respuesta Inteligente]
-        D1 --> D2 --> D3 --> D4
-    end
-
-    subgraph "🌐 Puertos y Servicios"
-        direction TB
-        P1[🌍 Puerto 8080<br/>Frontend + Backend Principal]
-        P2[🔧 Puerto 8000<br/>API MCP + Documentación]
-        P3[⚙️ Puerto 5678<br/>N8N Workflow Engine]
-    end
+    A[👤 Usuario Web] --> B[🎨 Frontend Bootstrap]
+    B --> C[⚡ FastAPI Backend Principal - 8080]
+    C --> D[🧠 N8N Workflow Engine - 5678]
+    D --> E[🤖 MCP Server - IA Avanzada]
+    C --> F[🔧 API MCP - 8000]
+    F --> E
+    E --> D
+    D --> C
+    C --> B
+    B --> A
+    
+    G[📊 Base de Datos Proyectos] --> F
+    H[🔍 MCP Inspector] --> E
+    I[📡 Webhook N8N] --> D
 ```
 
 ### Componentes principales:
