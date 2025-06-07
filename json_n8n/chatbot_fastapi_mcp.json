@@ -1,0 +1,169 @@
+{
+  "name": "chatbot_fastapi_mcp",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "request",
+        "responseMode": "responseNode",
+        "options": {
+          "ignoreBots": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4aea8d69-c953-48bc-938f-95ee6180a640",
+      "name": "Webhook",
+      "webhookId": "17618898-086b-4b2e-abb3-4f6f967ac808"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Actúa como un asistente simpático y con buen sentido del humor. Responde de forma breve, clara y amigable. Aquí va la pregunta del usuario: \"{{ $json.body.pregunta }}\".\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        260,
+        0
+      ],
+      "id": "548e8988-8998-4d24-babf-1d7c79bee175",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        240,
+        200
+      ],
+      "id": "42d19fc0-6ab5-4a14-8913-873fa4288901",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KIxQ6xvOmddnMdJg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        980,
+        0
+      ],
+      "id": "dd08f31e-0db6-49cf-9cb9-029725c22f22",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Obtenemos la respuesta del primer item\noutput = items[0].get('json', {}).get('output', \"Sin respuesta 😅\")\n\n# Devolvemos la respuesta en formato JSON seguro\nreturn [\n    {\n        \"json\": {\n            \"Respuesta\": output,\n        }\n    }\n]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        0
+      ],
+      "id": "6d55afcd-1a3e-49ca-858c-dbf2ee32395b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "http://127.0.0.1:8000/mcp"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        420,
+        220
+      ],
+      "id": "e7752f2b-8ea4-4123-bb23-82e72190eced",
+      "name": "MCP Client"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "164a3587-a798-4a87-8c3f-e3112e803428",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "efbe9c172dbe6b42302993af038537afd6ec07d2d1683f1b8d056f972a9a251d"
+  },
+  "id": "tHoXsjPtEwC402so",
+  "tags": []
+}
