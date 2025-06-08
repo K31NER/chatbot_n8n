@@ -19,6 +19,12 @@ Este repositorio contiene la implementación completa de un chatbot inteligente 
 ![Respuesta Modelo MCP](image/Respuesta_modelo_con_mcp.png)
 *Respuesta completa del modelo integrado con MCP*
 
+![Solicitud de Creación de Proyecto](image/Solicitud_de_creacion_de_proeycto.png)
+*Solicitud para crear un nuevo proyecto usando las capacidades MCP*
+
+![Proyecto Creado por MCP](image/proyecto_creado_por_mcp.png)
+*Confirmación de proyecto creado exitosamente en la base de datos por MCP*
+
 ![Actividad del Workflow](image/actividad_id3.png)
 *Actividad y ejecución del workflow con MCP*
 
@@ -214,9 +220,10 @@ N8N/
 └── 📁 image/
     ├── 🖼️ nuevo_workflow.png   # 🆕 Workflow actualizado con MCP
     ├── 🖼️ Conexion_mcp.png     # 🆕 Configuración MCP
-    ├── 🖼️ MCP_inspector.png    # 🆕 Inspector de herramientas MCP
-    ├── 🖼️ Respuesta_mcp.png    # 🆕 Ejemplo respuesta MCP
+    ├── 🖼️ MCP_inspector.png    # 🆕 Inspector de herramientas MCP    ├── 🖼️ Respuesta_mcp.png    # 🆕 Ejemplo respuesta MCP
     ├── 🖼️ Respuesta_modelo_con_mcp.png # 🆕 Respuesta completa
+    ├── 🖼️ Solicitud_de_creacion_de_proeycto.png # 🆕 Solicitud creación proyecto
+    ├── 🖼️ proyecto_creado_por_mcp.png # 🆕 Confirmación proyecto creado
     ├── 🖼️ actividad_id3.png    # 🆕 Actividad del workflow
     ├── 🖼️ workflow.png         # Workflow base original
     └── 🖼️ interfaz.png         # Captura de la interfaz web
