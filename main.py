@@ -1,15 +1,15 @@
 import os
 import httpx
 from dotenv import load_dotenv
+from fastapi import FastAPI,Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import FastAPI,Request, Form
 
 # Cargamos las varibales de entorno
 load_dotenv()
 
 # Obtenmos la url de n8n
-URL_N8N = os.getenv("N8N_URL")
+URL_N8N = os.getenv("URL_N8N")
 
 # Creamos el objeto de Fastapi
 app = FastAPI()
@@ -33,7 +33,6 @@ async def chatbot(pregunta: str = Form()):
         async with httpx.AsyncClient() as client:
             response = await client.post(url=URL_N8N, json=data)
             response.raise_for_status()
-            
             # Si N8N responde con datos, intentar extraer la respuesta
             try:
                 response_data = response.json() if response.content else {}
